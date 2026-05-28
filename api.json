@@ -1,0 +1,1027 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "CarsHub Crew Website Sync API",
+    "version": "1.0.0",
+    "description": "Read-only API for syncing crew data to an external website. All endpoints require a valid crew API key obtained from the Website Sync module settings in the crew dashboard. **HTTPS is mandatory** — plain HTTP requests are rejected with 403."
+  },
+  "servers": [
+    {
+      "url": "https://api.carshub.nl/api",
+      "description": "CarsHub production API (HTTPS only)"
+    }
+  ],
+  "security": [
+    {
+      "CrewApiKey": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Members",
+      "description": "Crew member roster."
+    },
+    {
+      "name": "Cars",
+      "description": "Cars owned by crew members."
+    },
+    {
+      "name": "Events",
+      "description": "Past and upcoming crew events."
+    },
+    {
+      "name": "Stats",
+      "description": "Crew overview statistics."
+    },
+    {
+      "name": "Pages",
+      "description": "Website page configuration managed via the Website Sync module."
+    }
+  ],
+  "paths": {
+    "/crews/{crew}/members": {
+      "get": {
+        "summary": "List crew members",
+        "description": "Returns all members of the crew ordered by join date (oldest first).",
+        "operationId": "getCrewMembers",
+        "tags": ["Members"],
+        "parameters": [
+          { "$ref": "#/components/parameters/CrewSlug" }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of crew members.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["data"],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Member" }
+                    }
+                  }
+                },
+                "example": {
+                  "data": [
+                    {
+                      "id": 1,
+                      "name": "Matthijs Iriks",
+                      "username": "matthijsiriks",
+                      "avatar_url": "https://api.carshub.nl/storage/avatars/matthijs.jpg",
+                      "role": "owner",
+                      "staff_title": null,
+                      "joined_at": "2026-01-01T00:00:00.000000Z"
+                    },
+                    {
+                      "id": 42,
+                      "name": "Jan de Vries",
+                      "username": "jandevries",
+                      "avatar_url": "https://api.carshub.nl/storage/avatars/jan.jpg",
+                      "role": "mod",
+                      "staff_title": "Event Organiser",
+                      "joined_at": "2026-01-15T09:00:00.000000Z"
+                    },
+                    {
+                      "id": 57,
+                      "name": "Sven Bakker",
+                      "username": "svenbakker",
+                      "avatar_url": null,
+                      "role": "member",
+                      "staff_title": null,
+                      "joined_at": "2026-02-20T14:30:00.000000Z"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/crews/{crew}/cars": {
+      "get": {
+        "summary": "List crew cars",
+        "description": "Returns all active cars belonging to crew members. Sold cars and cars of non-members are excluded. License plates are never included.",
+        "operationId": "getCrewCars",
+        "tags": ["Cars"],
+        "parameters": [
+          { "$ref": "#/components/parameters/CrewSlug" }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of active cars.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["data"],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Car" }
+                    }
+                  }
+                },
+                "example": {
+                  "data": [
+                    {
+                      "id": 7,
+                      "slug": "2019-volkswagen-golf",
+                      "make": "Volkswagen",
+                      "model": "Golf",
+                      "year": 2019,
+                      "color": "Deep Black Pearl",
+                      "description": "Stage 2 build with custom intercooler.",
+                      "edition": "GTI Performance",
+                      "horsepower": 245,
+                      "engine_size": "2.0 TSI",
+                      "transmission": "DSG",
+                      "drive_type": "FWD",
+                      "body_style": "Hatchback",
+                      "avatar_url": "https://api.carshub.nl/storage/cars/golf.jpg",
+                      "owner": {
+                        "id": 42,
+                        "name": "Jan de Vries",
+                        "username": "jandevries"
+                      }
+                    },
+                    {
+                      "id": 12,
+                      "slug": "2021-bmw-m3",
+                      "make": "BMW",
+                      "model": "M3",
+                      "year": 2021,
+                      "color": "Isle of Man Green",
+                      "description": null,
+                      "edition": "Competition",
+                      "horsepower": 510,
+                      "engine_size": "3.0 Twin-Turbo",
+                      "transmission": "Manual",
+                      "drive_type": "RWD",
+                      "body_style": "Saloon",
+                      "avatar_url": null,
+                      "owner": {
+                        "id": 57,
+                        "name": "Sven Bakker",
+                        "username": "svenbakker"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/crews/{crew}/events/past": {
+      "get": {
+        "summary": "List past events",
+        "description": "Returns events whose `starts_at` is in the past, ordered newest first.",
+        "operationId": "getCrewPastEvents",
+        "tags": ["Events"],
+        "parameters": [
+          { "$ref": "#/components/parameters/CrewSlug" }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of past events.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["data"],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Event" }
+                    }
+                  }
+                },
+                "example": {
+                  "data": [
+                    {
+                      "id": 2,
+                      "title": "Track Day Zandvoort",
+                      "description": "Members-only track day at Zandvoort Circuit.",
+                      "location": "Zandvoort Circuit",
+                      "address": "Circuit Park Zandvoort, Burgemeester van Alphenstraat 108",
+                      "members_only": true,
+                      "starts_at": "2026-05-10T08:00:00.000000Z",
+                      "ends_at": "2026-05-10T17:00:00.000000Z",
+                      "avatar_url": "https://api.carshub.nl/storage/events/track-day.jpg",
+                      "banner_url": null
+                    },
+                    {
+                      "id": 1,
+                      "title": "Spring Meet 2026",
+                      "description": "Kick-off of the 2026 season at Schiphol Trade Park.",
+                      "location": "Schiphol Trade Park",
+                      "address": "Boeing Avenue 30, Schiphol",
+                      "members_only": false,
+                      "starts_at": "2026-04-05T10:00:00.000000Z",
+                      "ends_at": "2026-04-05T17:00:00.000000Z",
+                      "avatar_url": null,
+                      "banner_url": null
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/crews/{crew}/events/upcoming": {
+      "get": {
+        "summary": "List upcoming events",
+        "description": "Returns events whose `starts_at` is in the future, ordered soonest first.",
+        "operationId": "getCrewUpcomingEvents",
+        "tags": ["Events"],
+        "parameters": [
+          { "$ref": "#/components/parameters/CrewSlug" }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of upcoming events.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["data"],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Event" }
+                    }
+                  }
+                },
+                "example": {
+                  "data": [
+                    {
+                      "id": 3,
+                      "title": "Summer Meet 2026",
+                      "description": "Annual summer gathering at Zandvoort.",
+                      "location": "Zandvoort Circuit",
+                      "address": "Circuit Park Zandvoort, Burgemeester van Alphenstraat 108",
+                      "members_only": false,
+                      "starts_at": "2026-07-12T10:00:00.000000Z",
+                      "ends_at": "2026-07-12T18:00:00.000000Z",
+                      "avatar_url": "https://api.carshub.nl/storage/events/summer-meet.jpg",
+                      "banner_url": "https://api.carshub.nl/storage/events/summer-meet-banner.jpg"
+                    },
+                    {
+                      "id": 4,
+                      "title": "Autumn Cruise",
+                      "description": null,
+                      "location": "Amsterdam",
+                      "address": null,
+                      "members_only": false,
+                      "starts_at": "2026-10-03T09:00:00.000000Z",
+                      "ends_at": null,
+                      "avatar_url": null,
+                      "banner_url": null
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/crews/{crew}/events/{event}": {
+      "get": {
+        "summary": "Get event detail",
+        "description": "Returns full details for a single event including the attendee list. Only attendees with status `attending` or `maybe` are included.",
+        "operationId": "getCrewEvent",
+        "tags": ["Events"],
+        "parameters": [
+          { "$ref": "#/components/parameters/CrewSlug" },
+          {
+            "name": "event",
+            "in": "path",
+            "required": true,
+            "description": "The numeric ID of the event.",
+            "schema": {
+              "type": "integer",
+              "example": 3
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Event detail with attendees.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["data"],
+                  "properties": {
+                    "data": { "$ref": "#/components/schemas/EventDetail" }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "id": 3,
+                    "title": "Summer Meet 2026",
+                    "description": "Annual summer gathering at Zandvoort.",
+                    "location": "Zandvoort Circuit",
+                    "address": "Circuit Park Zandvoort, Burgemeester van Alphenstraat 108",
+                    "members_only": false,
+                    "starts_at": "2026-07-12T10:00:00.000000Z",
+                    "ends_at": "2026-07-12T18:00:00.000000Z",
+                    "avatar_url": "https://api.carshub.nl/storage/events/summer-meet.jpg",
+                    "banner_url": "https://api.carshub.nl/storage/events/summer-meet-banner.jpg",
+                    "attendees_count": 24,
+                    "attendees": [
+                      {
+                        "id": 1,
+                        "name": "Matthijs Iriks",
+                        "username": "matthijsiriks",
+                        "avatar_url": "https://api.carshub.nl/storage/avatars/matthijs.jpg",
+                        "status": "attending"
+                      },
+                      {
+                        "id": 42,
+                        "name": "Jan de Vries",
+                        "username": "jandevries",
+                        "avatar_url": "https://api.carshub.nl/storage/avatars/jan.jpg",
+                        "status": "attending"
+                      },
+                      {
+                        "id": 57,
+                        "name": "Sven Bakker",
+                        "username": "svenbakker",
+                        "avatar_url": null,
+                        "status": "maybe"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/crews/{crew}/stats": {
+      "get": {
+        "summary": "Get crew statistics",
+        "description": "Returns general crew information alongside key statistics: member count, active car count, representative count, and event counts.",
+        "operationId": "getCrewStats",
+        "tags": ["Stats"],
+        "parameters": [
+          { "$ref": "#/components/parameters/CrewSlug" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Crew info and statistics.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["data"],
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "required": ["crew", "stats"],
+                      "properties": {
+                        "crew": { "$ref": "#/components/schemas/CrewInfo" },
+                        "stats": { "$ref": "#/components/schemas/CrewStats" }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "crew": {
+                      "id": 1,
+                      "name": "Dutch Performance Club",
+                      "slug": "dutch-performance-club",
+                      "description": "A community for performance car enthusiasts in the Netherlands.",
+                      "plan": "pro",
+                      "is_public": true,
+                      "avatar_url": "https://api.carshub.nl/storage/crews/dpc-avatar.jpg",
+                      "banner_url": "https://api.carshub.nl/storage/crews/dpc-banner.jpg",
+                      "created_at": "2026-01-01T00:00:00.000000Z"
+                    },
+                    "stats": {
+                      "members": 87,
+                      "cars": 112,
+                      "representatives": 14,
+                      "past_events": 9,
+                      "upcoming_events": 2
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/crews/{crew}/pages": {
+      "get": {
+        "summary": "List website pages",
+        "description": "Returns configuration for all six website pages: `home`, `about`, `crew_list`, `events`, `event_detail`, and `contact`. Pages that have not been configured by the crew are returned with default values (`is_enabled: false`, empty settings).",
+        "operationId": "getCrewPages",
+        "tags": ["Pages"],
+        "parameters": [
+          { "$ref": "#/components/parameters/CrewSlug" }
+        ],
+        "responses": {
+          "200": {
+            "description": "All six page configurations.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["data"],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "minItems": 6,
+                      "maxItems": 6,
+                      "items": { "$ref": "#/components/schemas/Page" }
+                    }
+                  }
+                },
+                "example": {
+                  "data": [
+                    {
+                      "key": "home",
+                      "is_enabled": true,
+                      "title": "Welcome to Dutch Performance Club",
+                      "top_text": "We are a passionate group of car enthusiasts based in the Netherlands.",
+                      "settings": {
+                        "show_featured_builds": true,
+                        "show_latest_events": true,
+                        "cta_text": "Join Us Today"
+                      }
+                    },
+                    {
+                      "key": "about",
+                      "is_enabled": true,
+                      "title": null,
+                      "top_text": null,
+                      "settings": {}
+                    },
+                    {
+                      "key": "crew_list",
+                      "is_enabled": true,
+                      "title": null,
+                      "top_text": null,
+                      "settings": {}
+                    },
+                    {
+                      "key": "events",
+                      "is_enabled": true,
+                      "title": null,
+                      "top_text": null,
+                      "settings": {}
+                    },
+                    {
+                      "key": "event_detail",
+                      "is_enabled": false,
+                      "title": null,
+                      "top_text": null,
+                      "settings": {}
+                    },
+                    {
+                      "key": "contact",
+                      "is_enabled": true,
+                      "title": "Get in Touch",
+                      "top_text": null,
+                      "settings": {
+                        "contact_form_enabled": true,
+                        "contact_form_email": "crew@example.com"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/crews/{crew}/pages/{pageKey}": {
+      "get": {
+        "summary": "Get a single website page",
+        "description": "Returns configuration for one website page by its key. Returns default values if the page has not been configured yet. Returns 404 for unrecognised page keys.",
+        "operationId": "getCrewPage",
+        "tags": ["Pages"],
+        "parameters": [
+          { "$ref": "#/components/parameters/CrewSlug" },
+          {
+            "name": "pageKey",
+            "in": "path",
+            "required": true,
+            "description": "The page key.",
+            "schema": {
+              "type": "string",
+              "enum": ["home", "about", "crew_list", "events", "event_detail", "contact"],
+              "example": "home"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Page configuration.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["data"],
+                  "properties": {
+                    "data": { "$ref": "#/components/schemas/Page" }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "key": "home",
+                    "is_enabled": true,
+                    "title": "Welcome to Dutch Performance Club",
+                    "top_text": "We are a passionate group of car enthusiasts based in the Netherlands.",
+                    "settings": {
+                      "show_featured_builds": true,
+                      "show_latest_events": true,
+                      "cta_text": "Join Us Today"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "CrewApiKey": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "The crew's website API key. Generated when the Website Sync module is enabled. Format: `chk_<48 random characters>`."
+      }
+    },
+    "parameters": {
+      "CrewSlug": {
+        "name": "crew",
+        "in": "path",
+        "required": true,
+        "description": "The slug of the crew.",
+        "schema": {
+          "type": "string",
+          "example": "dutch-performance-club"
+        }
+      }
+    },
+    "responses": {
+      "HttpsRequired": {
+        "description": "The request was made over plain HTTP. HTTPS is required for all endpoints.",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/ErrorMessage" },
+            "example": { "message": "HTTPS is required." }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Missing or invalid API key.",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/ErrorMessage" }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Forbidden. Returned when the request is made over plain HTTP (`HTTPS is required.`) or when the Website Sync module is not enabled for this crew.",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/ErrorMessage" },
+            "examples": {
+              "https_required": {
+                "summary": "Plain HTTP request rejected",
+                "value": { "message": "HTTPS is required." }
+              },
+              "module_disabled": {
+                "summary": "Website Sync module not enabled",
+                "value": { "message": "Website Sync module is not enabled for this crew." }
+              }
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "The requested resource was not found.",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/ErrorMessage" }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "ErrorMessage": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Invalid or missing API key."
+          }
+        }
+      },
+      "Member": {
+        "type": "object",
+        "required": ["id", "name", "username", "avatar_url", "role", "staff_title", "joined_at"],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 42
+          },
+          "name": {
+            "type": "string",
+            "example": "Jan de Vries"
+          },
+          "username": {
+            "type": "string",
+            "example": "jandevries"
+          },
+          "avatar_url": {
+            "type": ["string", "null"],
+            "format": "uri",
+            "example": "https://api.carshub.nl/storage/avatars/jan.jpg"
+          },
+          "role": {
+            "type": ["string", "null"],
+            "enum": ["owner", "mod", "member", null],
+            "example": "mod"
+          },
+          "staff_title": {
+            "type": ["string", "null"],
+            "example": "Event Organiser"
+          },
+          "joined_at": {
+            "type": ["string", "null"],
+            "description": "ISO 8601 date-time or date string of when the member joined.",
+            "example": "2026-01-15T09:00:00.000000Z"
+          }
+        }
+      },
+      "CarOwner": {
+        "type": "object",
+        "required": ["id", "name", "username"],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 42
+          },
+          "name": {
+            "type": "string",
+            "example": "Jan de Vries"
+          },
+          "username": {
+            "type": "string",
+            "example": "jandevries"
+          }
+        }
+      },
+      "Car": {
+        "type": "object",
+        "required": [
+          "id", "slug", "make", "model", "year", "color", "description",
+          "edition", "horsepower", "engine_size", "transmission",
+          "drive_type", "body_style", "avatar_url", "owner"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 7
+          },
+          "slug": {
+            "type": "string",
+            "example": "2019-volkswagen-golf"
+          },
+          "make": {
+            "type": "string",
+            "example": "Volkswagen"
+          },
+          "model": {
+            "type": "string",
+            "example": "Golf"
+          },
+          "year": {
+            "type": "integer",
+            "example": 2019
+          },
+          "color": {
+            "type": ["string", "null"],
+            "example": "Deep Black Pearl"
+          },
+          "description": {
+            "type": ["string", "null"],
+            "example": "Stage 2 build with custom intercooler."
+          },
+          "edition": {
+            "type": ["string", "null"],
+            "example": "GTI Performance"
+          },
+          "horsepower": {
+            "type": ["integer", "null"],
+            "example": 245
+          },
+          "engine_size": {
+            "type": ["string", "null"],
+            "example": "2.0 TSI"
+          },
+          "transmission": {
+            "type": ["string", "null"],
+            "example": "DSG"
+          },
+          "drive_type": {
+            "type": ["string", "null"],
+            "example": "FWD"
+          },
+          "body_style": {
+            "type": ["string", "null"],
+            "example": "Hatchback"
+          },
+          "avatar_url": {
+            "type": ["string", "null"],
+            "format": "uri",
+            "example": "https://api.carshub.nl/storage/cars/golf.jpg"
+          },
+          "owner": {
+            "$ref": "#/components/schemas/CarOwner"
+          }
+        }
+      },
+      "Event": {
+        "type": "object",
+        "required": [
+          "id", "title", "description", "location", "address",
+          "members_only", "starts_at", "ends_at", "avatar_url", "banner_url"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 3
+          },
+          "title": {
+            "type": "string",
+            "example": "Summer Meet 2026"
+          },
+          "description": {
+            "type": ["string", "null"],
+            "example": "Annual summer gathering at Zandvoort."
+          },
+          "location": {
+            "type": ["string", "null"],
+            "example": "Zandvoort Circuit"
+          },
+          "address": {
+            "type": ["string", "null"],
+            "example": "Circuit Park Zandvoort, Burgemeester van Alphenstraat 108"
+          },
+          "members_only": {
+            "type": "boolean",
+            "example": false
+          },
+          "starts_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-07-12T10:00:00.000000Z"
+          },
+          "ends_at": {
+            "type": ["string", "null"],
+            "format": "date-time",
+            "example": "2026-07-12T18:00:00.000000Z"
+          },
+          "avatar_url": {
+            "type": ["string", "null"],
+            "format": "uri",
+            "example": "https://api.carshub.nl/storage/events/summer-meet.jpg"
+          },
+          "banner_url": {
+            "type": ["string", "null"],
+            "format": "uri",
+            "example": "https://api.carshub.nl/storage/events/summer-meet-banner.jpg"
+          }
+        }
+      },
+      "Attendee": {
+        "type": "object",
+        "required": ["id", "name", "username", "avatar_url", "status"],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 42
+          },
+          "name": {
+            "type": "string",
+            "example": "Jan de Vries"
+          },
+          "username": {
+            "type": "string",
+            "example": "jandevries"
+          },
+          "avatar_url": {
+            "type": ["string", "null"],
+            "format": "uri",
+            "example": "https://api.carshub.nl/storage/avatars/jan.jpg"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["attending", "maybe"],
+            "example": "attending"
+          }
+        }
+      },
+      "EventDetail": {
+        "allOf": [
+          { "$ref": "#/components/schemas/Event" },
+          {
+            "type": "object",
+            "required": ["attendees_count", "attendees"],
+            "properties": {
+              "attendees_count": {
+                "type": "integer",
+                "description": "Number of attendees with status `attending` or `maybe`.",
+                "example": 24
+              },
+              "attendees": {
+                "type": "array",
+                "items": { "$ref": "#/components/schemas/Attendee" }
+              }
+            }
+          }
+        ]
+      },
+      "CrewInfo": {
+        "type": "object",
+        "required": ["id", "name", "slug", "description", "plan", "is_public", "avatar_url", "banner_url", "created_at"],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Dutch Performance Club"
+          },
+          "slug": {
+            "type": "string",
+            "example": "dutch-performance-club"
+          },
+          "description": {
+            "type": ["string", "null"],
+            "example": "A community for performance car enthusiasts in the Netherlands."
+          },
+          "plan": {
+            "type": "string",
+            "enum": ["free", "pro"],
+            "example": "pro"
+          },
+          "is_public": {
+            "type": "boolean",
+            "example": true
+          },
+          "avatar_url": {
+            "type": ["string", "null"],
+            "format": "uri",
+            "example": "https://api.carshub.nl/storage/crews/dpc-avatar.jpg"
+          },
+          "banner_url": {
+            "type": ["string", "null"],
+            "format": "uri",
+            "example": "https://api.carshub.nl/storage/crews/dpc-banner.jpg"
+          },
+          "created_at": {
+            "type": ["string", "null"],
+            "format": "date-time",
+            "example": "2026-01-01T00:00:00.000000Z"
+          }
+        }
+      },
+      "CrewStats": {
+        "type": "object",
+        "required": ["members", "cars", "representatives", "past_events", "upcoming_events"],
+        "properties": {
+          "members": {
+            "type": "integer",
+            "description": "Total number of crew members.",
+            "example": 87
+          },
+          "cars": {
+            "type": "integer",
+            "description": "Total number of active cars owned by crew members.",
+            "example": 112
+          },
+          "representatives": {
+            "type": "integer",
+            "description": "Number of users who have this crew set as their featured crew.",
+            "example": 14
+          },
+          "past_events": {
+            "type": "integer",
+            "description": "Number of events that have already taken place.",
+            "example": 9
+          },
+          "upcoming_events": {
+            "type": "integer",
+            "description": "Number of events scheduled in the future.",
+            "example": 2
+          }
+        }
+      },
+      "PageSettings": {
+        "type": "object",
+        "description": "Free-form key/value settings configured per page. Available keys depend on the page type.",
+        "additionalProperties": true,
+        "properties": {
+          "show_featured_builds": {
+            "type": "boolean",
+            "description": "Home page — whether to show a featured builds block."
+          },
+          "show_latest_events": {
+            "type": "boolean",
+            "description": "Home page — whether to show the latest events block."
+          },
+          "cta_text": {
+            "type": "string",
+            "description": "Home page — call-to-action button label.",
+            "example": "Join Us Today"
+          },
+          "contact_form_enabled": {
+            "type": "boolean",
+            "description": "Contact page — whether the contact form is active."
+          },
+          "contact_form_email": {
+            "type": "string",
+            "format": "email",
+            "description": "Contact page — email address that receives contact form submissions.",
+            "example": "crew@example.com"
+          }
+        }
+      },
+      "Page": {
+        "type": "object",
+        "required": ["key", "is_enabled", "title", "top_text", "settings"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "enum": ["home", "about", "crew_list", "events", "event_detail", "contact"],
+            "example": "home"
+          },
+          "is_enabled": {
+            "type": "boolean",
+            "description": "Whether this page is enabled on the external website.",
+            "example": true
+          },
+          "title": {
+            "type": ["string", "null"],
+            "description": "Optional custom page title set by the crew.",
+            "example": "Welcome to Dutch Performance Club"
+          },
+          "top_text": {
+            "type": ["string", "null"],
+            "description": "Optional introductory text shown at the top of the page.",
+            "example": "We are a passionate group of car enthusiasts based in the Netherlands."
+          },
+          "settings": {
+            "$ref": "#/components/schemas/PageSettings"
+          }
+        }
+      }
+    }
+  }
+}
