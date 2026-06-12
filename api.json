@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://api.carshub.nl/api",
+      "url": "https://carshub.nl/api",
       "description": "CarsHub production API (HTTPS only)"
     }
   ],
@@ -69,7 +69,7 @@
                       "id": 1,
                       "name": "Matthijs Iriks",
                       "username": "matthijsiriks",
-                      "avatar_url": "https://api.carshub.nl/storage/avatars/matthijs.jpg",
+                      "avatar_url": "https://carshub.nl/storage/avatars/matthijs.jpg",
                       "role": "owner",
                       "staff_title": null,
                       "joined_at": "2026-01-01T00:00:00.000000Z"
@@ -78,7 +78,7 @@
                       "id": 42,
                       "name": "Jan de Vries",
                       "username": "jandevries",
-                      "avatar_url": "https://api.carshub.nl/storage/avatars/jan.jpg",
+                      "avatar_url": "https://carshub.nl/storage/avatars/jan.jpg",
                       "role": "mod",
                       "staff_title": "Event Organiser",
                       "joined_at": "2026-01-15T09:00:00.000000Z"
@@ -143,7 +143,7 @@
                       "transmission": "DSG",
                       "drive_type": "FWD",
                       "body_style": "Hatchback",
-                      "avatar_url": "https://api.carshub.nl/storage/cars/golf.jpg",
+                      "avatar_url": "https://carshub.nl/storage/cars/golf.jpg",
                       "owner": {
                         "id": 42,
                         "name": "Jan de Vries",
@@ -217,7 +217,7 @@
                       "members_only": true,
                       "starts_at": "2026-05-10T08:00:00.000000Z",
                       "ends_at": "2026-05-10T17:00:00.000000Z",
-                      "avatar_url": "https://api.carshub.nl/storage/events/track-day.jpg",
+                      "avatar_url": "https://carshub.nl/storage/events/track-day.jpg",
                       "banner_url": null
                     },
                     {
@@ -278,8 +278,8 @@
                       "members_only": false,
                       "starts_at": "2026-07-12T10:00:00.000000Z",
                       "ends_at": "2026-07-12T18:00:00.000000Z",
-                      "avatar_url": "https://api.carshub.nl/storage/events/summer-meet.jpg",
-                      "banner_url": "https://api.carshub.nl/storage/events/summer-meet-banner.jpg"
+                      "avatar_url": "https://carshub.nl/storage/events/summer-meet.jpg",
+                      "banner_url": "https://carshub.nl/storage/events/summer-meet-banner.jpg"
                     },
                     {
                       "id": 4,
@@ -345,22 +345,22 @@
                     "members_only": false,
                     "starts_at": "2026-07-12T10:00:00.000000Z",
                     "ends_at": "2026-07-12T18:00:00.000000Z",
-                    "avatar_url": "https://api.carshub.nl/storage/events/summer-meet.jpg",
-                    "banner_url": "https://api.carshub.nl/storage/events/summer-meet-banner.jpg",
+                    "avatar_url": "https://carshub.nl/storage/events/summer-meet.jpg",
+                    "banner_url": "https://carshub.nl/storage/events/summer-meet-banner.jpg",
                     "attendees_count": 24,
                     "attendees": [
                       {
                         "id": 1,
                         "name": "Matthijs Iriks",
                         "username": "matthijsiriks",
-                        "avatar_url": "https://api.carshub.nl/storage/avatars/matthijs.jpg",
+                        "avatar_url": "https://carshub.nl/storage/avatars/matthijs.jpg",
                         "status": "attending"
                       },
                       {
                         "id": 42,
                         "name": "Jan de Vries",
                         "username": "jandevries",
-                        "avatar_url": "https://api.carshub.nl/storage/avatars/jan.jpg",
+                        "avatar_url": "https://carshub.nl/storage/avatars/jan.jpg",
                         "status": "attending"
                       },
                       {
@@ -419,8 +419,8 @@
                       "description": "A community for performance car enthusiasts in the Netherlands.",
                       "plan": "pro",
                       "is_public": true,
-                      "avatar_url": "https://api.carshub.nl/storage/crews/dpc-avatar.jpg",
-                      "banner_url": "https://api.carshub.nl/storage/crews/dpc-banner.jpg",
+                      "avatar_url": "https://carshub.nl/storage/crews/dpc-avatar.jpg",
+                      "banner_url": "https://carshub.nl/storage/crews/dpc-banner.jpg",
                       "created_at": "2026-01-01T00:00:00.000000Z"
                     },
                     "stats": {
@@ -679,7 +679,7 @@
           "avatar_url": {
             "type": ["string", "null"],
             "format": "uri",
-            "example": "https://api.carshub.nl/storage/avatars/jan.jpg"
+            "example": "https://carshub.nl/storage/avatars/jan.jpg"
           },
           "role": {
             "type": ["string", "null"],
@@ -778,7 +778,7 @@
           "avatar_url": {
             "type": ["string", "null"],
             "format": "uri",
-            "example": "https://api.carshub.nl/storage/cars/golf.jpg"
+            "example": "https://carshub.nl/storage/cars/golf.jpg"
           },
           "owner": {
             "$ref": "#/components/schemas/CarOwner"
@@ -829,12 +829,12 @@
           "avatar_url": {
             "type": ["string", "null"],
             "format": "uri",
-            "example": "https://api.carshub.nl/storage/events/summer-meet.jpg"
+            "example": "https://carshub.nl/storage/events/summer-meet.jpg"
           },
           "banner_url": {
             "type": ["string", "null"],
             "format": "uri",
-            "example": "https://api.carshub.nl/storage/events/summer-meet-banner.jpg"
+            "example": "https://carshub.nl/storage/events/summer-meet-banner.jpg"
           }
         }
       },
@@ -857,7 +857,7 @@
           "avatar_url": {
             "type": ["string", "null"],
             "format": "uri",
-            "example": "https://api.carshub.nl/storage/avatars/jan.jpg"
+            "example": "https://carshub.nl/storage/avatars/jan.jpg"
           },
           "status": {
             "type": "string",
@@ -918,12 +918,12 @@
           "avatar_url": {
             "type": ["string", "null"],
             "format": "uri",
-            "example": "https://api.carshub.nl/storage/crews/dpc-avatar.jpg"
+            "example": "https://carshub.nl/storage/crews/dpc-avatar.jpg"
           },
           "banner_url": {
             "type": ["string", "null"],
             "format": "uri",
-            "example": "https://api.carshub.nl/storage/crews/dpc-banner.jpg"
+            "example": "https://carshub.nl/storage/crews/dpc-banner.jpg"
           },
           "created_at": {
             "type": ["string", "null"],
