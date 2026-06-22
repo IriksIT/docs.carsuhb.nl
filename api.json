@@ -1,9 +1,9 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "CarsHub Crew Website Sync API",
-    "version": "1.0.0",
-    "description": "Read-only API for syncing crew data to an external website. All endpoints require a valid crew API key obtained from the Website Sync module settings in the crew dashboard. **HTTPS is mandatory** — plain HTTP requests are rejected with 403."
+    "title": "CarsHub Crew API",
+    "version": "1.1.0",
+    "description": "API for syncing crew data to an external website and importing events into system-managed crews. **HTTPS is mandatory** — plain HTTP requests are rejected with 403.\n\n## Authentication\n\nTwo separate bearer-token schemes are used depending on the endpoint group:\n\n- **Website Sync API** (`CrewApiKey`) — read-only endpoints for syncing crew data to an external website. Key obtained from the Website Sync module settings in the crew dashboard. Format: `chk_<48 random characters>`.\n- **Event Import API** (`EventImportKey`) — write endpoints for importing events into a system-managed crew. Key generated when the crew is created via the `crews:create-system` command. Format: `eik_<48 random characters>`."
   },
   "servers": [
     {
@@ -36,6 +36,10 @@
     {
       "name": "Pages",
       "description": "Website page configuration managed via the Website Sync module."
+    },
+    {
+      "name": "Event Import",
+      "description": "Write endpoints for importing events into a system-managed crew. Requires the `EventImportKey` bearer token (`eik_*`) generated when the crew is created."
     }
   ],
   "paths": {
@@ -582,6 +586,185 @@
           "404": { "$ref": "#/components/responses/NotFound" }
         }
       }
+    },
+    "/crews/{crew}/import/events": {
+      "post": {
+        "summary": "Create an event",
+        "description": "Creates a new event on a system-managed crew. Requires the crew's `EventImportKey` bearer token. The event is attributed to the CarsHub system account.",
+        "operationId": "importCrewEvent",
+        "tags": ["Event Import"],
+        "security": [{ "EventImportKey": [] }],
+        "parameters": [
+          { "$ref": "#/components/parameters/CrewSlug" }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/EventImportRequest" },
+              "example": {
+                "title": "Silvia Cup Round 1",
+                "description": "First round of the Nissan Silvia one-make series at Zandvoort.",
+                "location": "Circuit Zandvoort",
+                "address": "Burgemeester van Alphenstraat 108, Zandvoort",
+                "starts_at": "2026-08-15T09:00:00Z",
+                "ends_at": "2026-08-15T17:00:00Z",
+                "members_only": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Event created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["data"],
+                  "properties": {
+                    "data": { "$ref": "#/components/schemas/Event" }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "id": 12,
+                    "title": "Silvia Cup Round 1",
+                    "description": "First round of the Nissan Silvia one-make series at Zandvoort.",
+                    "location": "Circuit Zandvoort",
+                    "address": "Burgemeester van Alphenstraat 108, Zandvoort",
+                    "members_only": false,
+                    "starts_at": "2026-08-15T09:00:00.000000Z",
+                    "ends_at": "2026-08-15T17:00:00.000000Z",
+                    "avatar_url": null,
+                    "banner_url": null
+                  }
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/UnauthorizedImport" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "422": { "$ref": "#/components/responses/ValidationError" }
+        }
+      }
+    },
+    "/crews/{crew}/import/events/{event}": {
+      "put": {
+        "summary": "Update an event",
+        "description": "Replaces all fields of an existing event on a system-managed crew. Requires the crew's `EventImportKey` bearer token. All fields except `title` and `starts_at` are optional and will be set to `null` if omitted.",
+        "operationId": "updateImportedCrewEvent",
+        "tags": ["Event Import"],
+        "security": [{ "EventImportKey": [] }],
+        "parameters": [
+          { "$ref": "#/components/parameters/CrewSlug" },
+          {
+            "name": "event",
+            "in": "path",
+            "required": true,
+            "description": "The numeric ID of the event.",
+            "schema": {
+              "type": "integer",
+              "example": 12
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/EventImportRequest" },
+              "example": {
+                "title": "Silvia Cup Round 1 — Updated",
+                "description": "Updated details for round 1.",
+                "location": "Circuit Zandvoort",
+                "address": "Burgemeester van Alphenstraat 108, Zandvoort",
+                "starts_at": "2026-08-15T09:00:00Z",
+                "ends_at": "2026-08-15T18:00:00Z",
+                "members_only": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Event updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["data"],
+                  "properties": {
+                    "data": { "$ref": "#/components/schemas/Event" }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "id": 12,
+                    "title": "Silvia Cup Round 1 — Updated",
+                    "description": "Updated details for round 1.",
+                    "location": "Circuit Zandvoort",
+                    "address": "Burgemeester van Alphenstraat 108, Zandvoort",
+                    "members_only": false,
+                    "starts_at": "2026-08-15T09:00:00.000000Z",
+                    "ends_at": "2026-08-15T18:00:00.000000Z",
+                    "avatar_url": null,
+                    "banner_url": null
+                  }
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/UnauthorizedImport" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "422": { "$ref": "#/components/responses/ValidationError" }
+        }
+      },
+      "delete": {
+        "summary": "Delete an event",
+        "description": "Permanently deletes an event from a system-managed crew. Requires the crew's `EventImportKey` bearer token.",
+        "operationId": "deleteImportedCrewEvent",
+        "tags": ["Event Import"],
+        "security": [{ "EventImportKey": [] }],
+        "parameters": [
+          { "$ref": "#/components/parameters/CrewSlug" },
+          {
+            "name": "event",
+            "in": "path",
+            "required": true,
+            "description": "The numeric ID of the event.",
+            "schema": {
+              "type": "integer",
+              "example": 12
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Event deleted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["message"],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Event deleted."
+                    }
+                  }
+                },
+                "example": { "message": "Event deleted." }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/UnauthorizedImport" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
     }
   },
   "components": {
@@ -590,6 +773,11 @@
         "type": "http",
         "scheme": "bearer",
         "description": "The crew's website API key. Generated when the Website Sync module is enabled. Format: `chk_<48 random characters>`."
+      },
+      "EventImportKey": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "The crew's event import key. Generated when the crew is created via the `crews:create-system` command. Format: `eik_<48 random characters>`. Only system-managed crews have this key."
       }
     },
     "parameters": {
@@ -615,10 +803,20 @@
         }
       },
       "Unauthorized": {
-        "description": "Missing or invalid API key.",
+        "description": "Missing or invalid Website Sync API key.",
         "content": {
           "application/json": {
-            "schema": { "$ref": "#/components/schemas/ErrorMessage" }
+            "schema": { "$ref": "#/components/schemas/ErrorMessage" },
+            "example": { "message": "Invalid or missing API key." }
+          }
+        }
+      },
+      "UnauthorizedImport": {
+        "description": "Missing or invalid event import key.",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/ErrorMessage" },
+            "example": { "message": "Invalid or missing event import key." }
           }
         }
       },
@@ -645,6 +843,34 @@
         "content": {
           "application/json": {
             "schema": { "$ref": "#/components/schemas/ErrorMessage" }
+          }
+        }
+      },
+      "ValidationError": {
+        "description": "The request body failed validation.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": ["message", "errors"],
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "The title field is required."
+                },
+                "errors": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  },
+                  "example": {
+                    "title": ["The title field is required."],
+                    "starts_at": ["The starts at field is required."]
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1019,6 +1245,48 @@
           },
           "settings": {
             "$ref": "#/components/schemas/PageSettings"
+          }
+        }
+      },
+      "EventImportRequest": {
+        "type": "object",
+        "required": ["title", "starts_at"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 200,
+            "example": "Silvia Cup Round 1"
+          },
+          "description": {
+            "type": ["string", "null"],
+            "maxLength": 1000,
+            "example": "First round of the Nissan Silvia one-make series."
+          },
+          "location": {
+            "type": ["string", "null"],
+            "maxLength": 200,
+            "example": "Circuit Zandvoort"
+          },
+          "address": {
+            "type": ["string", "null"],
+            "maxLength": 500,
+            "example": "Burgemeester van Alphenstraat 108, Zandvoort"
+          },
+          "starts_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-08-15T09:00:00Z"
+          },
+          "ends_at": {
+            "type": ["string", "null"],
+            "format": "date-time",
+            "description": "Must be after `starts_at` and within 7 days of it.",
+            "example": "2026-08-15T17:00:00Z"
+          },
+          "members_only": {
+            "type": "boolean",
+            "default": false,
+            "example": false
           }
         }
       }
