@@ -48,9 +48,13 @@
         "summary": "List crew members",
         "description": "Returns all members of the crew ordered by join date (oldest first).",
         "operationId": "getCrewMembers",
-        "tags": ["Members"],
+        "tags": [
+          "Members"
+        ],
         "parameters": [
-          { "$ref": "#/components/parameters/CrewSlug" }
+          {
+            "$ref": "#/components/parameters/CrewSlug"
+          }
         ],
         "responses": {
           "200": {
@@ -59,11 +63,15 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data"],
+                  "required": [
+                    "data"
+                  ],
                   "properties": {
                     "data": {
                       "type": "array",
-                      "items": { "$ref": "#/components/schemas/Member" }
+                      "items": {
+                        "$ref": "#/components/schemas/Member"
+                      }
                     }
                   }
                 },
@@ -76,7 +84,14 @@
                       "avatar_url": "https://carshub.nl/storage/avatars/matthijs.jpg",
                       "role": "owner",
                       "staff_title": null,
-                      "joined_at": "2026-01-01T00:00:00.000000Z"
+                      "joined_at": "2026-01-01T00:00:00.000000Z",
+                      "social_links": {
+                        "instagram": null,
+                        "facebook": null,
+                        "x": null,
+                        "snapchat": null,
+                        "website": null
+                      }
                     },
                     {
                       "id": 42,
@@ -85,7 +100,14 @@
                       "avatar_url": "https://carshub.nl/storage/avatars/jan.jpg",
                       "role": "mod",
                       "staff_title": "Event Organiser",
-                      "joined_at": "2026-01-15T09:00:00.000000Z"
+                      "joined_at": "2026-01-15T09:00:00.000000Z",
+                      "social_links": {
+                        "instagram": "jandevries_ig",
+                        "facebook": null,
+                        "x": null,
+                        "snapchat": null,
+                        "website": null
+                      }
                     },
                     {
                       "id": 57,
@@ -94,16 +116,29 @@
                       "avatar_url": null,
                       "role": "member",
                       "staff_title": null,
-                      "joined_at": "2026-02-20T14:30:00.000000Z"
+                      "joined_at": "2026-02-20T14:30:00.000000Z",
+                      "social_links": {
+                        "instagram": null,
+                        "facebook": null,
+                        "x": null,
+                        "snapchat": null,
+                        "website": null
+                      }
                     }
                   ]
                 }
               }
             }
           },
-          "401": { "$ref": "#/components/responses/Unauthorized" },
-          "403": { "$ref": "#/components/responses/Forbidden" },
-          "404": { "$ref": "#/components/responses/NotFound" }
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
         }
       }
     },
@@ -112,9 +147,13 @@
         "summary": "List crew cars",
         "description": "Returns all active cars belonging to crew members. Sold cars and cars of non-members are excluded. License plates are never included.",
         "operationId": "getCrewCars",
-        "tags": ["Cars"],
+        "tags": [
+          "Cars"
+        ],
         "parameters": [
-          { "$ref": "#/components/parameters/CrewSlug" }
+          {
+            "$ref": "#/components/parameters/CrewSlug"
+          }
         ],
         "responses": {
           "200": {
@@ -123,11 +162,15 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data"],
+                  "required": [
+                    "data"
+                  ],
                   "properties": {
                     "data": {
                       "type": "array",
-                      "items": { "$ref": "#/components/schemas/Car" }
+                      "items": {
+                        "$ref": "#/components/schemas/Car"
+                      }
                     }
                   }
                 },
@@ -152,6 +195,13 @@
                         "id": 42,
                         "name": "Jan de Vries",
                         "username": "jandevries"
+                      },
+                      "social_links": {
+                        "instagram": null,
+                        "facebook": null,
+                        "x": null,
+                        "snapchat": null,
+                        "website": null
                       }
                     },
                     {
@@ -173,6 +223,13 @@
                         "id": 57,
                         "name": "Sven Bakker",
                         "username": "svenbakker"
+                      },
+                      "social_links": {
+                        "instagram": null,
+                        "facebook": null,
+                        "x": null,
+                        "snapchat": null,
+                        "website": null
                       }
                     }
                   ]
@@ -180,9 +237,15 @@
               }
             }
           },
-          "401": { "$ref": "#/components/responses/Unauthorized" },
-          "403": { "$ref": "#/components/responses/Forbidden" },
-          "404": { "$ref": "#/components/responses/NotFound" }
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
         }
       }
     },
@@ -191,9 +254,13 @@
         "summary": "List past events",
         "description": "Returns events whose `starts_at` is in the past, ordered newest first.",
         "operationId": "getCrewPastEvents",
-        "tags": ["Events"],
+        "tags": [
+          "Events"
+        ],
         "parameters": [
-          { "$ref": "#/components/parameters/CrewSlug" }
+          {
+            "$ref": "#/components/parameters/CrewSlug"
+          }
         ],
         "responses": {
           "200": {
@@ -202,11 +269,15 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data"],
+                  "required": [
+                    "data"
+                  ],
                   "properties": {
                     "data": {
                       "type": "array",
-                      "items": { "$ref": "#/components/schemas/Event" }
+                      "items": {
+                        "$ref": "#/components/schemas/Event"
+                      }
                     }
                   }
                 },
@@ -241,9 +312,15 @@
               }
             }
           },
-          "401": { "$ref": "#/components/responses/Unauthorized" },
-          "403": { "$ref": "#/components/responses/Forbidden" },
-          "404": { "$ref": "#/components/responses/NotFound" }
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
         }
       }
     },
@@ -252,9 +329,13 @@
         "summary": "List upcoming events",
         "description": "Returns events whose `starts_at` is in the future, ordered soonest first.",
         "operationId": "getCrewUpcomingEvents",
-        "tags": ["Events"],
+        "tags": [
+          "Events"
+        ],
         "parameters": [
-          { "$ref": "#/components/parameters/CrewSlug" }
+          {
+            "$ref": "#/components/parameters/CrewSlug"
+          }
         ],
         "responses": {
           "200": {
@@ -263,11 +344,15 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data"],
+                  "required": [
+                    "data"
+                  ],
                   "properties": {
                     "data": {
                       "type": "array",
-                      "items": { "$ref": "#/components/schemas/Event" }
+                      "items": {
+                        "$ref": "#/components/schemas/Event"
+                      }
                     }
                   }
                 },
@@ -302,9 +387,15 @@
               }
             }
           },
-          "401": { "$ref": "#/components/responses/Unauthorized" },
-          "403": { "$ref": "#/components/responses/Forbidden" },
-          "404": { "$ref": "#/components/responses/NotFound" }
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
         }
       }
     },
@@ -313,9 +404,13 @@
         "summary": "Get event detail",
         "description": "Returns full details for a single event including the attendee list. Only attendees with status `attending` or `maybe` are included.",
         "operationId": "getCrewEvent",
-        "tags": ["Events"],
+        "tags": [
+          "Events"
+        ],
         "parameters": [
-          { "$ref": "#/components/parameters/CrewSlug" },
+          {
+            "$ref": "#/components/parameters/CrewSlug"
+          },
           {
             "name": "event",
             "in": "path",
@@ -334,9 +429,13 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data"],
+                  "required": [
+                    "data"
+                  ],
                   "properties": {
-                    "data": { "$ref": "#/components/schemas/EventDetail" }
+                    "data": {
+                      "$ref": "#/components/schemas/EventDetail"
+                    }
                   }
                 },
                 "example": {
@@ -374,15 +473,73 @@
                         "avatar_url": null,
                         "status": "maybe"
                       }
-                    ]
+                    ],
+                    "is_multi_day": true,
+                    "event_days": [
+                      "2026-08-01",
+                      "2026-08-02",
+                      "2026-08-03"
+                    ],
+                    "attendees_by_day": {
+                      "2026-08-01": [
+                        {
+                          "id": 1,
+                          "name": "Matthijs Iriks",
+                          "username": "matthijsiriks",
+                          "avatar_url": "https://carshub.nl/storage/avatars/matthijs.jpg",
+                          "status": "attending",
+                          "is_passenger": false,
+                          "car": {
+                            "id": 7,
+                            "make": "Nissan",
+                            "model": "Silvia",
+                            "year": 1999,
+                            "color": "Zenki White"
+                          }
+                        },
+                        {
+                          "id": 42,
+                          "name": "Jan de Vries",
+                          "username": "jandevries",
+                          "avatar_url": null,
+                          "status": "attending",
+                          "is_passenger": true,
+                          "car": null
+                        }
+                      ],
+                      "2026-08-02": [
+                        {
+                          "id": 1,
+                          "name": "Matthijs Iriks",
+                          "username": "matthijsiriks",
+                          "avatar_url": "https://carshub.nl/storage/avatars/matthijs.jpg",
+                          "status": "attending",
+                          "is_passenger": false,
+                          "car": {
+                            "id": 12,
+                            "make": "Honda",
+                            "model": "Civic",
+                            "year": 2001,
+                            "color": "Championship White"
+                          }
+                        }
+                      ],
+                      "2026-08-03": []
+                    }
                   }
                 }
               }
             }
           },
-          "401": { "$ref": "#/components/responses/Unauthorized" },
-          "403": { "$ref": "#/components/responses/Forbidden" },
-          "404": { "$ref": "#/components/responses/NotFound" }
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
         }
       }
     },
@@ -391,9 +548,13 @@
         "summary": "Get crew statistics",
         "description": "Returns general crew information alongside key statistics: member count, active car count, representative count, and event counts.",
         "operationId": "getCrewStats",
-        "tags": ["Stats"],
+        "tags": [
+          "Stats"
+        ],
         "parameters": [
-          { "$ref": "#/components/parameters/CrewSlug" }
+          {
+            "$ref": "#/components/parameters/CrewSlug"
+          }
         ],
         "responses": {
           "200": {
@@ -402,14 +563,23 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data"],
+                  "required": [
+                    "data"
+                  ],
                   "properties": {
                     "data": {
                       "type": "object",
-                      "required": ["crew", "stats"],
+                      "required": [
+                        "crew",
+                        "stats"
+                      ],
                       "properties": {
-                        "crew": { "$ref": "#/components/schemas/CrewInfo" },
-                        "stats": { "$ref": "#/components/schemas/CrewStats" }
+                        "crew": {
+                          "$ref": "#/components/schemas/CrewInfo"
+                        },
+                        "stats": {
+                          "$ref": "#/components/schemas/CrewStats"
+                        }
                       }
                     }
                   }
@@ -439,9 +609,15 @@
               }
             }
           },
-          "401": { "$ref": "#/components/responses/Unauthorized" },
-          "403": { "$ref": "#/components/responses/Forbidden" },
-          "404": { "$ref": "#/components/responses/NotFound" }
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
         }
       }
     },
@@ -450,9 +626,13 @@
         "summary": "List website pages",
         "description": "Returns configuration for all six website pages: `home`, `about`, `crew_list`, `events`, `event_detail`, and `contact`. Pages that have not been configured by the crew are returned with default values (`is_enabled: false`, empty settings).",
         "operationId": "getCrewPages",
-        "tags": ["Pages"],
+        "tags": [
+          "Pages"
+        ],
         "parameters": [
-          { "$ref": "#/components/parameters/CrewSlug" }
+          {
+            "$ref": "#/components/parameters/CrewSlug"
+          }
         ],
         "responses": {
           "200": {
@@ -461,13 +641,17 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data"],
+                  "required": [
+                    "data"
+                  ],
                   "properties": {
                     "data": {
                       "type": "array",
                       "minItems": 6,
                       "maxItems": 6,
-                      "items": { "$ref": "#/components/schemas/Page" }
+                      "items": {
+                        "$ref": "#/components/schemas/Page"
+                      }
                     }
                   }
                 },
@@ -527,9 +711,15 @@
               }
             }
           },
-          "401": { "$ref": "#/components/responses/Unauthorized" },
-          "403": { "$ref": "#/components/responses/Forbidden" },
-          "404": { "$ref": "#/components/responses/NotFound" }
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
         }
       }
     },
@@ -538,9 +728,13 @@
         "summary": "Get a single website page",
         "description": "Returns configuration for one website page by its key. Returns default values if the page has not been configured yet. Returns 404 for unrecognised page keys.",
         "operationId": "getCrewPage",
-        "tags": ["Pages"],
+        "tags": [
+          "Pages"
+        ],
         "parameters": [
-          { "$ref": "#/components/parameters/CrewSlug" },
+          {
+            "$ref": "#/components/parameters/CrewSlug"
+          },
           {
             "name": "pageKey",
             "in": "path",
@@ -548,7 +742,14 @@
             "description": "The page key.",
             "schema": {
               "type": "string",
-              "enum": ["home", "about", "crew_list", "events", "event_detail", "contact"],
+              "enum": [
+                "home",
+                "about",
+                "crew_list",
+                "events",
+                "event_detail",
+                "contact"
+              ],
               "example": "home"
             }
           }
@@ -560,9 +761,13 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data"],
+                  "required": [
+                    "data"
+                  ],
                   "properties": {
-                    "data": { "$ref": "#/components/schemas/Page" }
+                    "data": {
+                      "$ref": "#/components/schemas/Page"
+                    }
                   }
                 },
                 "example": {
@@ -581,9 +786,15 @@
               }
             }
           },
-          "401": { "$ref": "#/components/responses/Unauthorized" },
-          "403": { "$ref": "#/components/responses/Forbidden" },
-          "404": { "$ref": "#/components/responses/NotFound" }
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
         }
       }
     },
@@ -592,16 +803,26 @@
         "summary": "Create an event",
         "description": "Creates a new event on a system-managed crew. Requires the crew's `EventImportKey` bearer token. The event is attributed to the CarsHub system account.",
         "operationId": "importCrewEvent",
-        "tags": ["Event Import"],
-        "security": [{ "EventImportKey": [] }],
+        "tags": [
+          "Event Import"
+        ],
+        "security": [
+          {
+            "EventImportKey": []
+          }
+        ],
         "parameters": [
-          { "$ref": "#/components/parameters/CrewSlug" }
+          {
+            "$ref": "#/components/parameters/CrewSlug"
+          }
         ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/EventImportRequest" },
+              "schema": {
+                "$ref": "#/components/schemas/EventImportRequest"
+              },
               "example": {
                 "title": "Silvia Cup Round 1",
                 "description": "First round of the Nissan Silvia one-make series at Zandvoort.",
@@ -621,9 +842,13 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data"],
+                  "required": [
+                    "data"
+                  ],
                   "properties": {
-                    "data": { "$ref": "#/components/schemas/Event" }
+                    "data": {
+                      "$ref": "#/components/schemas/Event"
+                    }
                   }
                 },
                 "example": {
@@ -643,10 +868,18 @@
               }
             }
           },
-          "401": { "$ref": "#/components/responses/UnauthorizedImport" },
-          "403": { "$ref": "#/components/responses/Forbidden" },
-          "404": { "$ref": "#/components/responses/NotFound" },
-          "422": { "$ref": "#/components/responses/ValidationError" }
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedImport"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
         }
       }
     },
@@ -655,10 +888,18 @@
         "summary": "Update an event",
         "description": "Replaces all fields of an existing event on a system-managed crew. Requires the crew's `EventImportKey` bearer token. All fields except `title` and `starts_at` are optional and will be set to `null` if omitted.",
         "operationId": "updateImportedCrewEvent",
-        "tags": ["Event Import"],
-        "security": [{ "EventImportKey": [] }],
+        "tags": [
+          "Event Import"
+        ],
+        "security": [
+          {
+            "EventImportKey": []
+          }
+        ],
         "parameters": [
-          { "$ref": "#/components/parameters/CrewSlug" },
+          {
+            "$ref": "#/components/parameters/CrewSlug"
+          },
           {
             "name": "event",
             "in": "path",
@@ -674,7 +915,9 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/EventImportRequest" },
+              "schema": {
+                "$ref": "#/components/schemas/EventImportRequest"
+              },
               "example": {
                 "title": "Silvia Cup Round 1 — Updated",
                 "description": "Updated details for round 1.",
@@ -694,9 +937,13 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["data"],
+                  "required": [
+                    "data"
+                  ],
                   "properties": {
-                    "data": { "$ref": "#/components/schemas/Event" }
+                    "data": {
+                      "$ref": "#/components/schemas/Event"
+                    }
                   }
                 },
                 "example": {
@@ -716,20 +963,36 @@
               }
             }
           },
-          "401": { "$ref": "#/components/responses/UnauthorizedImport" },
-          "403": { "$ref": "#/components/responses/Forbidden" },
-          "404": { "$ref": "#/components/responses/NotFound" },
-          "422": { "$ref": "#/components/responses/ValidationError" }
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedImport"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          }
         }
       },
       "delete": {
         "summary": "Delete an event",
         "description": "Permanently deletes an event from a system-managed crew. Requires the crew's `EventImportKey` bearer token.",
         "operationId": "deleteImportedCrewEvent",
-        "tags": ["Event Import"],
-        "security": [{ "EventImportKey": [] }],
+        "tags": [
+          "Event Import"
+        ],
+        "security": [
+          {
+            "EventImportKey": []
+          }
+        ],
         "parameters": [
-          { "$ref": "#/components/parameters/CrewSlug" },
+          {
+            "$ref": "#/components/parameters/CrewSlug"
+          },
           {
             "name": "event",
             "in": "path",
@@ -748,7 +1011,9 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["message"],
+                  "required": [
+                    "message"
+                  ],
                   "properties": {
                     "message": {
                       "type": "string",
@@ -756,13 +1021,21 @@
                     }
                   }
                 },
-                "example": { "message": "Event deleted." }
+                "example": {
+                  "message": "Event deleted."
+                }
               }
             }
           },
-          "401": { "$ref": "#/components/responses/UnauthorizedImport" },
-          "403": { "$ref": "#/components/responses/Forbidden" },
-          "404": { "$ref": "#/components/responses/NotFound" }
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedImport"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
         }
       }
     }
@@ -797,8 +1070,12 @@
         "description": "The request was made over plain HTTP. HTTPS is required for all endpoints.",
         "content": {
           "application/json": {
-            "schema": { "$ref": "#/components/schemas/ErrorMessage" },
-            "example": { "message": "HTTPS is required." }
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            },
+            "example": {
+              "message": "HTTPS is required."
+            }
           }
         }
       },
@@ -806,8 +1083,12 @@
         "description": "Missing or invalid Website Sync API key.",
         "content": {
           "application/json": {
-            "schema": { "$ref": "#/components/schemas/ErrorMessage" },
-            "example": { "message": "Invalid or missing API key." }
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            },
+            "example": {
+              "message": "Invalid or missing API key."
+            }
           }
         }
       },
@@ -815,8 +1096,12 @@
         "description": "Missing or invalid event import key.",
         "content": {
           "application/json": {
-            "schema": { "$ref": "#/components/schemas/ErrorMessage" },
-            "example": { "message": "Invalid or missing event import key." }
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            },
+            "example": {
+              "message": "Invalid or missing event import key."
+            }
           }
         }
       },
@@ -824,15 +1109,21 @@
         "description": "Forbidden. Returned when the request is made over plain HTTP (`HTTPS is required.`) or when the Website Sync module is not enabled for this crew.",
         "content": {
           "application/json": {
-            "schema": { "$ref": "#/components/schemas/ErrorMessage" },
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            },
             "examples": {
               "https_required": {
                 "summary": "Plain HTTP request rejected",
-                "value": { "message": "HTTPS is required." }
+                "value": {
+                  "message": "HTTPS is required."
+                }
               },
               "module_disabled": {
                 "summary": "Website Sync module not enabled",
-                "value": { "message": "Website Sync module is not enabled for this crew." }
+                "value": {
+                  "message": "Website Sync module is not enabled for this crew."
+                }
               }
             }
           }
@@ -842,7 +1133,9 @@
         "description": "The requested resource was not found.",
         "content": {
           "application/json": {
-            "schema": { "$ref": "#/components/schemas/ErrorMessage" }
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
           }
         }
       },
@@ -852,7 +1145,10 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": ["message", "errors"],
+              "required": [
+                "message",
+                "errors"
+              ],
               "properties": {
                 "message": {
                   "type": "string",
@@ -862,11 +1158,17 @@
                   "type": "object",
                   "additionalProperties": {
                     "type": "array",
-                    "items": { "type": "string" }
+                    "items": {
+                      "type": "string"
+                    }
                   },
                   "example": {
-                    "title": ["The title field is required."],
-                    "starts_at": ["The starts at field is required."]
+                    "title": [
+                      "The title field is required."
+                    ],
+                    "starts_at": [
+                      "The starts at field is required."
+                    ]
                   }
                 }
               }
@@ -878,7 +1180,9 @@
     "schemas": {
       "ErrorMessage": {
         "type": "object",
-        "required": ["message"],
+        "required": [
+          "message"
+        ],
         "properties": {
           "message": {
             "type": "string",
@@ -888,7 +1192,16 @@
       },
       "Member": {
         "type": "object",
-        "required": ["id", "name", "username", "avatar_url", "role", "staff_title", "joined_at"],
+        "required": [
+          "id",
+          "name",
+          "username",
+          "avatar_url",
+          "role",
+          "staff_title",
+          "joined_at",
+          "social_links"
+        ],
         "properties": {
           "id": {
             "type": "integer",
@@ -903,29 +1216,99 @@
             "example": "jandevries"
           },
           "avatar_url": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "uri",
             "example": "https://carshub.nl/storage/avatars/jan.jpg"
           },
           "role": {
-            "type": ["string", "null"],
-            "enum": ["owner", "mod", "member", null],
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "owner",
+              "mod",
+              "member",
+              null
+            ],
             "example": "mod"
           },
           "staff_title": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "example": "Event Organiser"
           },
           "joined_at": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "description": "ISO 8601 date-time or date string of when the member joined.",
             "example": "2026-01-15T09:00:00.000000Z"
+          },
+          "social_links": {
+            "type": "object",
+            "description": "Social media handles and links. All fields are null when not set.",
+            "required": [
+              "instagram",
+              "facebook",
+              "x",
+              "snapchat",
+              "website"
+            ],
+            "properties": {
+              "instagram": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "example": "silvia_sam"
+              },
+              "facebook": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "example": null
+              },
+              "x": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "example": "silviasam_x"
+              },
+              "snapchat": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "example": null
+              },
+              "website": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "uri",
+                "example": "https://silvia.nl"
+              }
+            }
           }
         }
       },
       "CarOwner": {
         "type": "object",
-        "required": ["id", "name", "username"],
+        "required": [
+          "id",
+          "name",
+          "username"
+        ],
         "properties": {
           "id": {
             "type": "integer",
@@ -944,9 +1327,22 @@
       "Car": {
         "type": "object",
         "required": [
-          "id", "slug", "make", "model", "year", "color", "description",
-          "edition", "horsepower", "engine_size", "transmission",
-          "drive_type", "body_style", "avatar_url", "owner"
+          "id",
+          "slug",
+          "make",
+          "model",
+          "year",
+          "color",
+          "description",
+          "edition",
+          "horsepower",
+          "engine_size",
+          "transmission",
+          "drive_type",
+          "body_style",
+          "avatar_url",
+          "owner",
+          "social_links"
         ],
         "properties": {
           "id": {
@@ -970,52 +1366,136 @@
             "example": 2019
           },
           "color": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "example": "Deep Black Pearl"
           },
           "description": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "example": "Stage 2 build with custom intercooler."
           },
           "edition": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "example": "GTI Performance"
           },
           "horsepower": {
-            "type": ["integer", "null"],
+            "type": [
+              "integer",
+              "null"
+            ],
             "example": 245
           },
           "engine_size": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "example": "2.0 TSI"
           },
           "transmission": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "example": "DSG"
           },
           "drive_type": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "example": "FWD"
           },
           "body_style": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "example": "Hatchback"
           },
           "avatar_url": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "uri",
             "example": "https://carshub.nl/storage/cars/golf.jpg"
           },
           "owner": {
             "$ref": "#/components/schemas/CarOwner"
+          },
+          "social_links": {
+            "type": "object",
+            "description": "Social media links for the car. Falls back to the owner's social links when the car has no link set for a platform.",
+            "required": [
+              "instagram",
+              "facebook",
+              "x",
+              "snapchat",
+              "website"
+            ],
+            "properties": {
+              "instagram": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "example": "sam_s13"
+              },
+              "facebook": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "example": null
+              },
+              "x": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "example": null
+              },
+              "snapchat": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "example": null
+              },
+              "website": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "uri",
+                "example": "https://s13.nl"
+              }
+            }
           }
         }
       },
       "Event": {
         "type": "object",
         "required": [
-          "id", "title", "description", "location", "address",
-          "members_only", "starts_at", "ends_at", "avatar_url", "banner_url"
+          "id",
+          "title",
+          "description",
+          "location",
+          "address",
+          "members_only",
+          "starts_at",
+          "ends_at",
+          "avatar_url",
+          "banner_url"
         ],
         "properties": {
           "id": {
@@ -1027,15 +1507,24 @@
             "example": "Summer Meet 2026"
           },
           "description": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "example": "Annual summer gathering at Zandvoort."
           },
           "location": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "example": "Zandvoort Circuit"
           },
           "address": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "example": "Circuit Park Zandvoort, Burgemeester van Alphenstraat 108"
           },
           "members_only": {
@@ -1048,17 +1537,26 @@
             "example": "2026-07-12T10:00:00.000000Z"
           },
           "ends_at": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "date-time",
             "example": "2026-07-12T18:00:00.000000Z"
           },
           "avatar_url": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "uri",
             "example": "https://carshub.nl/storage/events/summer-meet.jpg"
           },
           "banner_url": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "uri",
             "example": "https://carshub.nl/storage/events/summer-meet-banner.jpg"
           }
@@ -1066,7 +1564,13 @@
       },
       "Attendee": {
         "type": "object",
-        "required": ["id", "name", "username", "avatar_url", "status"],
+        "required": [
+          "id",
+          "name",
+          "username",
+          "avatar_url",
+          "status"
+        ],
         "properties": {
           "id": {
             "type": "integer",
@@ -1081,23 +1585,37 @@
             "example": "jandevries"
           },
           "avatar_url": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "uri",
             "example": "https://carshub.nl/storage/avatars/jan.jpg"
           },
           "status": {
             "type": "string",
-            "enum": ["attending", "maybe"],
+            "enum": [
+              "attending",
+              "maybe"
+            ],
             "example": "attending"
           }
         }
       },
       "EventDetail": {
         "allOf": [
-          { "$ref": "#/components/schemas/Event" },
+          {
+            "$ref": "#/components/schemas/Event"
+          },
           {
             "type": "object",
-            "required": ["attendees_count", "attendees"],
+            "required": [
+              "attendees_count",
+              "attendees",
+              "is_multi_day",
+              "event_days",
+              "attendees_by_day"
+            ],
             "properties": {
               "attendees_count": {
                 "type": "integer",
@@ -1106,7 +1624,45 @@
               },
               "attendees": {
                 "type": "array",
-                "items": { "$ref": "#/components/schemas/Attendee" }
+                "items": {
+                  "$ref": "#/components/schemas/Attendee"
+                }
+              },
+              "is_multi_day": {
+                "type": "boolean",
+                "description": "True when the event spans multiple calendar days.",
+                "example": true
+              },
+              "event_days": {
+                "type": "array",
+                "description": "Ordered list of calendar dates (YYYY-MM-DD) covered by the event. Single-day events have exactly one entry.",
+                "items": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "example": [
+                  "2026-08-01",
+                  "2026-08-02",
+                  "2026-08-03"
+                ]
+              },
+              "attendees_by_day": {
+                "description": "Per-day breakdown of attendees for multi-day events. Keys are dates in YYYY-MM-DD format. Null for single-day events.",
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "description": "Map of date strings to lists of attendees present that day.",
+                    "additionalProperties": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/AttendeeDay"
+                      }
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               }
             }
           }
@@ -1114,7 +1670,17 @@
       },
       "CrewInfo": {
         "type": "object",
-        "required": ["id", "name", "slug", "description", "plan", "is_public", "avatar_url", "banner_url", "created_at"],
+        "required": [
+          "id",
+          "name",
+          "slug",
+          "description",
+          "plan",
+          "is_public",
+          "avatar_url",
+          "banner_url",
+          "created_at"
+        ],
         "properties": {
           "id": {
             "type": "integer",
@@ -1129,12 +1695,18 @@
             "example": "dutch-performance-club"
           },
           "description": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "example": "A community for performance car enthusiasts in the Netherlands."
           },
           "plan": {
             "type": "string",
-            "enum": ["free", "pro"],
+            "enum": [
+              "free",
+              "pro"
+            ],
             "example": "pro"
           },
           "is_public": {
@@ -1142,17 +1714,26 @@
             "example": true
           },
           "avatar_url": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "uri",
             "example": "https://carshub.nl/storage/crews/dpc-avatar.jpg"
           },
           "banner_url": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "uri",
             "example": "https://carshub.nl/storage/crews/dpc-banner.jpg"
           },
           "created_at": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "date-time",
             "example": "2026-01-01T00:00:00.000000Z"
           }
@@ -1160,7 +1741,13 @@
       },
       "CrewStats": {
         "type": "object",
-        "required": ["members", "cars", "representatives", "past_events", "upcoming_events"],
+        "required": [
+          "members",
+          "cars",
+          "representatives",
+          "past_events",
+          "upcoming_events"
+        ],
         "properties": {
           "members": {
             "type": "integer",
@@ -1221,11 +1808,24 @@
       },
       "Page": {
         "type": "object",
-        "required": ["key", "is_enabled", "title", "top_text", "settings"],
+        "required": [
+          "key",
+          "is_enabled",
+          "title",
+          "top_text",
+          "settings"
+        ],
         "properties": {
           "key": {
             "type": "string",
-            "enum": ["home", "about", "crew_list", "events", "event_detail", "contact"],
+            "enum": [
+              "home",
+              "about",
+              "crew_list",
+              "events",
+              "event_detail",
+              "contact"
+            ],
             "example": "home"
           },
           "is_enabled": {
@@ -1234,12 +1834,18 @@
             "example": true
           },
           "title": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "description": "Optional custom page title set by the crew.",
             "example": "Welcome to Dutch Performance Club"
           },
           "top_text": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "description": "Optional introductory text shown at the top of the page.",
             "example": "We are a passionate group of car enthusiasts based in the Netherlands."
           },
@@ -1250,7 +1856,10 @@
       },
       "EventImportRequest": {
         "type": "object",
-        "required": ["title", "starts_at"],
+        "required": [
+          "title",
+          "starts_at"
+        ],
         "properties": {
           "title": {
             "type": "string",
@@ -1258,17 +1867,26 @@
             "example": "Silvia Cup Round 1"
           },
           "description": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "maxLength": 1000,
             "example": "First round of the Nissan Silvia one-make series."
           },
           "location": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "maxLength": 200,
             "example": "Circuit Zandvoort"
           },
           "address": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "maxLength": 500,
             "example": "Burgemeester van Alphenstraat 108, Zandvoort"
           },
@@ -1278,7 +1896,10 @@
             "example": "2026-08-15T09:00:00Z"
           },
           "ends_at": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "date-time",
             "description": "Must be after `starts_at` and within 7 days of it.",
             "example": "2026-08-15T17:00:00Z"
@@ -1289,6 +1910,70 @@
             "example": false
           }
         }
+      },
+      "AttendeeDay": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Attendee"
+          },
+          {
+            "type": "object",
+            "required": [
+              "is_passenger",
+              "car"
+            ],
+            "properties": {
+              "is_passenger": {
+                "type": "boolean",
+                "description": "True when the attendee comes as a passenger (no car of their own for this day).",
+                "example": false
+              },
+              "car": {
+                "description": "The car the attendee brings this day, or null when attending as passenger or no car selected.",
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "make",
+                      "model",
+                      "year",
+                      "color"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "example": 7
+                      },
+                      "make": {
+                        "type": "string",
+                        "example": "Nissan"
+                      },
+                      "model": {
+                        "type": "string",
+                        "example": "Silvia"
+                      },
+                      "year": {
+                        "type": "integer",
+                        "example": 1999
+                      },
+                      "color": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "example": "Zenki White"
+                      }
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        ]
       }
     }
   }
