@@ -378,7 +378,7 @@
                       "address": null,
                       "members_only": false,
                       "starts_at": "2026-10-03T09:00:00.000000Z",
-                      "ends_at": null,
+                      "ends_at": "2026-10-03T09:00:00.000000Z",
                       "avatar_url": null,
                       "banner_url": null
                     }
@@ -1537,11 +1537,9 @@
             "example": "2026-07-12T10:00:00.000000Z"
           },
           "ends_at": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "format": "date-time",
+            "description": "End of the event. Falls back to `starts_at` when no explicit end date has been set (all-day events).",
             "example": "2026-07-12T18:00:00.000000Z"
           },
           "avatar_url": {
