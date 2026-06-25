@@ -1567,7 +1567,9 @@
           "name",
           "username",
           "avatar_url",
-          "status"
+          "status",
+          "is_passenger",
+          "car"
         ],
         "properties": {
           "id": {
@@ -1576,11 +1578,11 @@
           },
           "name": {
             "type": "string",
-            "example": "Jan de Vries"
+            "example": "Sam Tanaka"
           },
           "username": {
             "type": "string",
-            "example": "jandevries"
+            "example": "sam_r32"
           },
           "avatar_url": {
             "type": [
@@ -1588,7 +1590,7 @@
               "null"
             ],
             "format": "uri",
-            "example": "https://carshub.nl/storage/avatars/jan.jpg"
+            "example": "https://carshub.nl/storage/avatars/sam.jpg"
           },
           "status": {
             "type": "string",
@@ -1597,6 +1599,54 @@
               "maybe"
             ],
             "example": "attending"
+          },
+          "is_passenger": {
+            "type": "boolean",
+            "description": "True when the attendee registered as a passenger (no car of their own).",
+            "example": false
+          },
+          "car": {
+            "description": "The car the attendee is bringing, or null when attending as a passenger or no car selected.",
+            "oneOf": [
+              {
+                "type": "object",
+                "required": [
+                  "id",
+                  "make",
+                  "model",
+                  "year",
+                  "color"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "example": 7
+                  },
+                  "make": {
+                    "type": "string",
+                    "example": "Nissan"
+                  },
+                  "model": {
+                    "type": "string",
+                    "example": "Skyline GT-R"
+                  },
+                  "year": {
+                    "type": "integer",
+                    "example": 1999
+                  },
+                  "color": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "example": "Midnight Purple"
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         }
       },
@@ -1910,68 +1960,7 @@
         }
       },
       "AttendeeDay": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Attendee"
-          },
-          {
-            "type": "object",
-            "required": [
-              "is_passenger",
-              "car"
-            ],
-            "properties": {
-              "is_passenger": {
-                "type": "boolean",
-                "description": "True when the attendee comes as a passenger (no car of their own for this day).",
-                "example": false
-              },
-              "car": {
-                "description": "The car the attendee brings this day, or null when attending as passenger or no car selected.",
-                "oneOf": [
-                  {
-                    "type": "object",
-                    "required": [
-                      "id",
-                      "make",
-                      "model",
-                      "year",
-                      "color"
-                    ],
-                    "properties": {
-                      "id": {
-                        "type": "integer",
-                        "example": 7
-                      },
-                      "make": {
-                        "type": "string",
-                        "example": "Nissan"
-                      },
-                      "model": {
-                        "type": "string",
-                        "example": "Silvia"
-                      },
-                      "year": {
-                        "type": "integer",
-                        "example": 1999
-                      },
-                      "color": {
-                        "type": [
-                          "string",
-                          "null"
-                        ],
-                        "example": "Zenki White"
-                      }
-                    }
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
-              }
-            }
-          }
-        ]
+        "$ref": "#/components/schemas/Attendee"
       }
     }
   }
