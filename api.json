@@ -446,10 +446,12 @@
                     "location": "Zandvoort Circuit",
                     "address": "Circuit Park Zandvoort, Burgemeester van Alphenstraat 108",
                     "members_only": false,
+                    "invite_only": false,
                     "starts_at": "2026-07-12T10:00:00.000000Z",
                     "ends_at": "2026-07-12T18:00:00.000000Z",
                     "avatar_url": "https://carshub.nl/storage/events/summer-meet.jpg",
                     "banner_url": "https://carshub.nl/storage/events/summer-meet-banner.jpg",
+                    "qr_code_url": "https://carshub.nl/crews/skyline-crew/events/3/qr",
                     "attendees_count": 24,
                     "attendees": [
                       {
@@ -1531,6 +1533,11 @@
             "type": "boolean",
             "example": false
           },
+          "invite_only": {
+            "type": "boolean",
+            "description": "When true, the event is invite-only and non-approved attendees see only the title and blurred banner.",
+            "example": false
+          },
           "starts_at": {
             "type": "string",
             "format": "date-time",
@@ -1662,9 +1669,19 @@
               "attendees",
               "is_multi_day",
               "event_days",
-              "attendees_by_day"
+              "attendees_by_day",
+              "qr_code_url"
             ],
             "properties": {
+              "qr_code_url": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "uri",
+                "description": "URL to download the event QR code PNG. Non-null only when the crew has the `qr_codes` module enabled.",
+                "example": "https://carshub.nl/crews/skyline-crew/events/3/qr"
+              },
               "attendees_count": {
                 "type": "integer",
                 "description": "Number of attendees with status `attending` or `maybe`.",
